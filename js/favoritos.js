@@ -1,11 +1,12 @@
 function mostrarFavoritos() {
-    const app = document.getElementById('app');
-    app.innerHTML = `
-        <h2>Películas Favoritas</h2>
-        <ul>
-            <li>Mi vecino Totoro</li>
-            <li>El viaje de Chihiro</li>
-            <li>La princesa Mononoke</li>
-        </ul>
-    `;
+    const favoritos = obtenerFavoritos();
+    if (!favoritos.length) {
+        document.getElementById('app').innerHTML = '<p>No tienes películas favoritas.</p>';
+        return;
+    }
+
+    // Filtra las películas favoritas de la lista completa
+    const peliculasFavoritas = peliculas.filter(pelicula => favoritos.includes(pelicula.id));
+
+    mostrarPeliculas(peliculasFavoritas);
 }

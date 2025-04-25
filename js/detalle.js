@@ -1,10 +1,18 @@
-function mostrarDetalle() {
+function mostrarPeliculas(peliculas) {
     const app = document.getElementById('app');
-    app.innerHTML = `
-        <h2>Detalle de la Película</h2>
-        <p>Título: Mi vecino Totoro</p>
-        <p>Descripción: Una historia mágica sobre dos hermanas y su encuentro con un espíritu del bosque.</p>
-        <p>Director: Hayao Miyazaki</p>
-        <p>Año: 1988</p>
-    `;
+    if (!peliculas.length) {
+        app.innerHTML = '<p>No se encontraron películas.</p>';
+        return;
+    }
+
+    // Renderiza las películas con un botón de favorito
+    app.innerHTML = peliculas.map(pelicula => `
+        <div class="pelicula">
+            <img src="${pelicula.image}" alt="${pelicula.title}" class="pelicula-caratula">
+            <h3>${pelicula.title}</h3>
+            <button class="favorito-btn" onclick="agregarAFavoritos('${pelicula.id}')">
+                ❤️
+            </button>
+        </div>
+    `).join('');
 }

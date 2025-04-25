@@ -60,6 +60,23 @@
             if (activeBtn) activeBtn.classList.add('active');
         }
     </script>
+    <script>
+        function mostrarPeliculas(peliculas) {
+            const app = document.getElementById('app');
+            if (!peliculas.length) {
+                app.innerHTML = '<p>No se encontraron películas.</p>';
+                return;
+            }
+
+            // Renderiza las películas con solo imagen y título, y un evento onclick para mostrar detalles
+            app.innerHTML = peliculas.map(pelicula => `
+                <div class="pelicula" onclick="mostrarDetalle('${pelicula.id}', 'films')">
+                    <img src="${pelicula.image}" alt="${pelicula.title}" class="pelicula-caratula">
+                    <h3>${pelicula.title}</h3>
+                </div>
+            `).join('');
+        }
+    </script>
 
 </body>
 </html>

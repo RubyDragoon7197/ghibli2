@@ -37,6 +37,11 @@ function mostrarPeliculas(peliculas) {
 
 function buscarPeliculas(query) {
     const app = document.getElementById('app');
+    if (!query.trim()) {
+        app.innerHTML = '<p>Por favor, ingresa un término de búsqueda.</p>';
+        return;
+    }
+
     const peliculasFiltradas = peliculas.filter(pelicula =>
         pelicula.title.toLowerCase().includes(query.toLowerCase())
     );
@@ -47,27 +52,45 @@ function buscarPeliculas(query) {
     }
 
     app.innerHTML = peliculasFiltradas.map(pelicula => `
-        <div class="c-lista-pokemon">
+        <div class="pelicula">
+            <img src="${pelicula.image}" alt="${pelicula.title}" class="pelicula-caratula">
             <h3>${pelicula.title}</h3>
             <p>${pelicula.description}</p>
         </div>
     `).join('');
 }
 
-function mostrarHome(peliculas) {
+// Mostrar todas las películas al presionar "Home"
+function mostrarHome() {
     const app = document.getElementById('app');
-    app.innerHTML = ''; // Limpia el contenido anterior
+    if (!peliculas.length) {
+        app.innerHTML = '<p>No se encontraron películas.</p>';
+        return;
+    }
 
-    peliculas.forEach(pelicula => {
-        const peliculaDiv = document.createElement('div');
-        peliculaDiv.classList.add('pelicula');
-
-        peliculaDiv.innerHTML = `
+    app.innerHTML = peliculas.map(pelicula => `
+        <div class="pelicula">
             <img src="${pelicula.image}" alt="${pelicula.title}" class="pelicula-caratula">
             <h3>${pelicula.title}</h3>
             <p>${pelicula.description}</p>
-        `;
+        </div>
+    `).join('');
+}
 
-        app.appendChild(peliculaDiv);
-    });
+// Mostrar una película aleatoria al presionar "Aleatorios"
+function mostrarAleatorios() {
+    const app = document.getElementById('app');
+    if (!peliculas.length) {
+        app.innerHTML = '<p>No se encontraron películas.</p>';
+        return;
+    }
+
+    const peliculaAleatoria = peliculas[Math.floor(Math.random() * peliculas.length)];
+    app.innerHTML = `
+        <div class="pelicula">
+            <img src="${peliculaAleatoria.image}" alt="${peliculaAleatoria.title}" class="pelicula-caratula">
+            <h3>${peliculaAleatoria.title}</h3>
+            <p>${peliculaAleatoria.description}</p>
+        </div>
+    `;
 }
